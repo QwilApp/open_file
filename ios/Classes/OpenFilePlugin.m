@@ -123,7 +123,7 @@ static NSString *const CHANNEL_NAME = @"open_file";
 }
 
 - (void) loadFileWithWKWebView:(NSURL*)url {
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:_viewController.view.frame];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:_viewController.view.frame];
     NSURLRequest* urlRequest = [[NSURLRequest alloc] initWithURL:url];
     [webView loadRequest:urlRequest];
     UIViewController *webViewController = [[UIViewController alloc] init];
