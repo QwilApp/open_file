@@ -35,6 +35,8 @@ static NSString *const CHANNEL_NAME = @"open_file";
     if ([@"open_file" isEqualToString:call.method]) {
         _result = result;
         NSString *msg = call.arguments[@"file_path"];
+        NSNumber *numberWithBool = call.arguments[@"allow_to_export"];
+        BOOL allowToExport = [numberWithBool boolValue];
         NSFileManager *fileManager=[NSFileManager defaultManager];
         BOOL fileExist=[fileManager fileExistsAtPath:msg];
         if(fileExist){
@@ -101,10 +103,8 @@ static NSString *const CHANNEL_NAME = @"open_file";
                 NSLog(@"doc type not supported for preview");
                 NSLog(@"%@", exestr);
             }
-            
-            //TODO: use this flag from flutter export enabled user permission
-            BOOL isExternalEnabled = false;
-            if(isExternalEnabled) {
+
+            if(allowToExport) {
                 BOOL previewSucceeded = [_documentController presentPreviewAnimated:YES];
                 if(!previewSucceeded) {
                     [_documentController presentOpenInMenuFromRect:CGRectMake(500,20,100,100) inView:_viewController.view animated:YES];

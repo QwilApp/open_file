@@ -43,6 +43,7 @@ public class OpenFilePlugin implements MethodCallHandler {
     public void onMethodCall(MethodCall call, Result result) {
         if (call.method.equals("open_file")) {
             String filePath = call.argument("file_path").toString();
+            boolean allowToExport = call.argument("allow_to_export");
             File file = new File(filePath);
             if (!file.exists()) {
                 result.success("the " + filePath + " file is not exists");
@@ -59,9 +60,8 @@ public class OpenFilePlugin implements MethodCallHandler {
             } else {
                 intent.setDataAndType(Uri.fromFile(file), getFileType(filePath));
             }
-            //TODO: use flutter export enabled user permission
-            boolean isIntentSafe = false;
-            if(isIntentSafe) {
+
+            if(allowToExport) {
                 activity.startActivity(intent);
             }
             result.success("done");
